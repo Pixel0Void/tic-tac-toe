@@ -60,3 +60,9 @@ public struct ErrorDto
 {
     public string message;
 }
+
+[Serializable]
+public struct PlayerDisconnectedDto
+{
+    public string message;
+}
