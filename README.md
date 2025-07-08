@@ -61,5 +61,15 @@ Assets/
 3. Make sure your backend server is running ([server repo](https://github.com/Pixel0Void/tic-tac-toe-server)).
 4. Play the scene and enjoy the game with another player!
 
+---
+
+## 📷 Screenshots
+
+<p align="center">
+  <img src="Screenshots/Menu.jpg" width="300"/>
+  <img src="Screenshots/Game.jpg" width="300"/>
+</p>
+
+---
 
 Made with ❤️ using Unity.
