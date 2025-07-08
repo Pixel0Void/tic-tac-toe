@@ -18,6 +18,7 @@ public class GameManager : MonoBehaviour
             NetworkManager.Instance.Socket.OnUnityThread("roomJoined", OnRoomJoined);
             NetworkManager.Instance.Socket.OnUnityThread("gameReady", OnGameReady);
             NetworkManager.Instance.Socket.OnUnityThread("gameStateUpdate", OnGameStateUpdate);
+            NetworkManager.Instance.Socket.OnUnityThread("resetGame", OnResetGame);
         }
         else
         {
@@ -54,5 +55,10 @@ public class GameManager : MonoBehaviour
         m_CurrentScores[PlayerSymbol.O] = data.scores.O;
 
         m_CurrentTurnSymbol = data.currentTurn;
+    }
+
+    void OnResetGame(SocketIOResponse response)
+    {
+        Debug.Log("<color=green>Game is reseting...</color>");
     }
 }
