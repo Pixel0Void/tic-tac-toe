@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
-
+    public Button[] GameCells;
     public Image[] CellImages;
 
     [Header("Sprites")]
@@ -41,5 +41,18 @@ public class UIManager : MonoBehaviour
                 CellImages[index].sprite = OSprite;
                 break;
         }
+    }
+
+    public void SetCellsInteractable(bool interactable)
+    {
+        foreach (var cell in GameCells)
+        {
+            cell.interactable = interactable;
+        }
+    }
+
+    public void SetCellInteractable(int index, bool interactable)
+    {
+        GameCells[index].interactable = interactable;
     }
 }
