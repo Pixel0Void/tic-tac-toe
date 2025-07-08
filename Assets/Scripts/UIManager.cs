@@ -8,6 +8,9 @@ public class UIManager : MonoBehaviour
 
     public Text ScoresTxt;
 
+    public Image MySignImage;
+    public Image OpponentImage;
+
     [Header("Sprites")]
     public Sprite NoneSprite;
     public Sprite XSprite;
@@ -74,5 +77,20 @@ public class UIManager : MonoBehaviour
     {
         MyTurnIndicator.SetActive(isMyTurn);
         MyTurnIndicator.SetActive(!isMyTurn);
+    }
+
+    public void SetSigns(PlayerSymbol mySymbol)
+    {
+        switch (mySymbol)
+        {
+            case PlayerSymbol.X:
+                MySignImage.sprite = XSprite;
+                OpponentImage.sprite = OSprite;
+                break;
+            case PlayerSymbol.O:
+                MySignImage.sprite = OSprite;
+                OpponentImage.sprite = XSprite;
+                break;
+        }
     }
 }
