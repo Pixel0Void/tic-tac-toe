@@ -19,6 +19,7 @@ public class GameManager : MonoBehaviour
             NetworkManager.Instance.Socket.OnUnityThread("gameReady", OnGameReady);
             NetworkManager.Instance.Socket.OnUnityThread("gameStateUpdate", OnGameStateUpdate);
             NetworkManager.Instance.Socket.OnUnityThread("resetGame", OnResetGame);
+            NetworkManager.Instance.Socket.OnUnityThread("gameOver", OnGameOver);
         }
         else
         {
@@ -60,5 +61,20 @@ public class GameManager : MonoBehaviour
     void OnResetGame(SocketIOResponse response)
     {
         Debug.Log("<color=green>Game is reseting...</color>");
+    }
+
+    void OnGameOver(SocketIOResponse response)
+    {
+        var data = response.GetValue<GameOverDto>();
+        string result = "";
+        if (data.gameOver || data.winner != PlayerSymbol.None)
+        {
+            result = data.message + $"Winner: {data.winner}";
+        }
+        else
+        {
+            result = "Draw!";
+        }
+        Debug.Log($"<color=purple>{result}</color>");
     }
 }

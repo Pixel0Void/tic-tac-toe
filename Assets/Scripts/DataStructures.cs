@@ -46,3 +46,11 @@ public struct GameStateUpdateDto
         public int O;
     }
 }
+
+[Serializable]
+public struct GameOverDto
+{
+    public string message;
+    public bool gameOver;
+    public PlayerSymbol winner;
+}
