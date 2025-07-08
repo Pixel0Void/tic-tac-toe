@@ -66,3 +66,10 @@ public struct PlayerDisconnectedDto
 {
     public string message;
 }
+
+
+[Serializable]
+public struct MakeMoveDto
+{
+    public int index;
+}

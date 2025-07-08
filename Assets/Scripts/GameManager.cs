@@ -4,11 +4,25 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    [Header("Managers")]
+    public UIManager UIManager;
+
     private PlayerSymbol m_MyPlayerSymbol = PlayerSymbol.None;
     private string m_CurrentRoomId = "";
     private PlayerSymbol m_CurrentTurnSymbol = PlayerSymbol.None;
     private PlayerSymbol[] m_BoardState = new PlayerSymbol[9];
     private Dictionary<PlayerSymbol, int> m_CurrentScores = new Dictionary<PlayerSymbol, int>();
+
+    void Awake()
+    {
+        m_CurrentScores[PlayerSymbol.X] = 0;
+        m_CurrentScores[PlayerSymbol.O] = 0;
+
+        UIManager.SetCellsInteractable(false);
+
+        UIManager.UpdateScoreBoard(m_MyPlayerSymbol, m_CurrentScores[PlayerSymbol.X], m_CurrentScores[PlayerSymbol.O]);
+        UIManager.AddListenerToCells(OnCellClicked);
+    }
 
     void Start()
     {
@@ -29,10 +43,26 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void OnCellClicked(int inx)
+    {
+        if (m_MyPlayerSymbol == m_CurrentTurnSymbol && m_BoardState[inx] == PlayerSymbol.None)
+        {
+            Debug.Log($"<color=orange>Player {m_MyPlayerSymbol} clicked on cell {inx}. Emitting 'makeMove' ... </color>");
+            NetworkManager.Instance.Socket.Emit("makeMove", new MakeMoveDto { index = inx });
+            UIManager.UpdateCell(inx, m_MyPlayerSymbol);
+            UIManager.SetCellInteractable(inx, false);
+        }
+        else
+        {
+            Debug.LogWarning("It's not your turn or this cell is occupied");
+        }
+    }
+
     void OnPlayerAssigned(SocketIOResponse response)
     {
         var data = response.GetValue<PlayerAssignedDto>();
         m_MyPlayerSymbol = data.symbol;
+        UIManager.SetSigns(m_MyPlayerSymbol);
         Debug.Log($"<color=yellow> Your sign: {m_MyPlayerSymbol}</color>");
     }
 
@@ -47,17 +77,33 @@ public class GameManager : MonoBehaviour
     {
         var data = response.GetValue<string>();
         Debug.Log($"<color=green>{data}</color>");
+        UIManager.GoToGame();
     }
 
     void OnGameStateUpdate(SocketIOResponse response)
     {
         var data = response.GetValue<GameStateUpdateDto>();
         m_BoardState = data.board;
+        UIManager.UpdateCells(m_BoardState);
 
         m_CurrentScores[PlayerSymbol.X] = data.scores.X;
         m_CurrentScores[PlayerSymbol.O] = data.scores.O;
+        UIManager.UpdateScoreBoard(m_MyPlayerSymbol, m_CurrentScores[PlayerSymbol.X], m_CurrentScores[PlayerSymbol.O]);
 
         m_CurrentTurnSymbol = data.currentTurn;
+
+        bool gameIsActive = data.gameState == GameState.Active;
+        bool isMyTurn = m_MyPlayerSymbol == m_CurrentTurnSymbol;
+
+        UIManager.UpdateTurn(isMyTurn);
+
+        for (int i = 0; i < m_BoardState.Length; i++)
+        {
+            bool cellIsEmpty = m_BoardState[i] == PlayerSymbol.None;
+            UIManager.SetCellInteractable(i, gameIsActive && isMyTurn && cellIsEmpty);
+        }
+
+        Debug.Log($"<color=blue>Turn: {m_CurrentTurnSymbol}. The full game state updated: state: {data.gameState}, room: {data.roomId}</color>");
     }
 
     void OnResetGame(SocketIOResponse response)
@@ -78,6 +124,8 @@ public class GameManager : MonoBehaviour
             result = "Draw!";
         }
         Debug.Log($"<color=purple>{result}</color>");
+        UIManager.InitialEndGamePanel(data.gameOver, result);
+        UIManager.SetCellsInteractable(false);
     }
 
     void OnServerError(SocketIOResponse response)
@@ -90,5 +138,7 @@ public class GameManager : MonoBehaviour
     {
         var data = response.GetValue<PlayerDisconnectedDto>();
         Debug.Log($"<color=purple>{data.message}</color>");
+        UIManager.InitialEndGamePanel(true, data.message);
+        UIManager.SetCellsInteractable(false);
     }
 }

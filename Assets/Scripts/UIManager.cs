@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
@@ -33,6 +34,15 @@ public class UIManager : MonoBehaviour
     void Awake()
     {
         UpdateCells(PlayerSymbol.None);
+    }
+
+    public void AddListenerToCells(UnityAction<int> call)
+    {
+        for (int i = 0; i < GameCells.Length; i++)
+        {
+            int cellIndex = i;
+            GameCells[i].onClick.AddListener(() => call(cellIndex));
+        }
     }
 
     public void BackToMenu()
