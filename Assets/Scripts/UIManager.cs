@@ -6,6 +6,8 @@ public class UIManager : MonoBehaviour
     public Button[] GameCells;
     public Image[] CellImages;
 
+    public Text ScoresTxt;
+
     [Header("Sprites")]
     public Sprite NoneSprite;
     public Sprite XSprite;
@@ -54,5 +56,13 @@ public class UIManager : MonoBehaviour
     public void SetCellInteractable(int index, bool interactable)
     {
         GameCells[index].interactable = interactable;
+    }
+
+    public void UpdateScoreBoard(PlayerSymbol mySymbol, int xScore, int oScore)
+    {
+        if (mySymbol == PlayerSymbol.X)
+            ScoresTxt.text = $"{xScore} : {oScore}";
+        else
+            ScoresTxt.text = $"{oScore} : {xScore}";
     }
 }
