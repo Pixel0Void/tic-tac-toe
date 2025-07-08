@@ -41,6 +41,30 @@ public class NetworkManager : MonoBehaviour
         {
             Debug.Log("<color=red>Socket.IO Disconnected!</color>");
         };
+        Socket.OnPing += (sender, e) =>
+        {
+            Debug.Log("Ping");
+        };
+        Socket.OnPong += (sender, e) =>
+        {
+            Debug.Log("Pong: " + e.TotalMilliseconds);
+        };
+        Socket.OnReconnectAttempt += (sender, e) =>
+        {
+            Debug.LogWarning($"<color=orange>Socket.IO Reconnection Attempt: {e} </color>");
+        };
+        Socket.OnReconnectFailed += (sender, e) =>
+        {
+            Debug.LogError("<color=red>Scoket.IO Reconnect Failed </color>");
+        };
+        Socket.OnReconnectError += (sender, e) =>
+        {
+            Debug.Log($"<color=red> Socket.IO Reconnect Error: {e} </color>");
+        };
+        Socket.OnError += (sender, e) =>
+        {
+            Debug.LogError($"<color=red>Socket.IO Error: {e} </color>");
+        };
 
         Debug.Log($"Attempting to connect to: {connectionUri}");
         Socket.Connect();
