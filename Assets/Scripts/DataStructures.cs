@@ -54,3 +54,9 @@ public struct GameOverDto
     public bool gameOver;
     public PlayerSymbol winner;
 }
+
+[Serializable]
+public struct ErrorDto
+{
+    public string message;
+}

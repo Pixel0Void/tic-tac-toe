@@ -20,6 +20,7 @@ public class GameManager : MonoBehaviour
             NetworkManager.Instance.Socket.OnUnityThread("gameStateUpdate", OnGameStateUpdate);
             NetworkManager.Instance.Socket.OnUnityThread("resetGame", OnResetGame);
             NetworkManager.Instance.Socket.OnUnityThread("gameOver", OnGameOver);
+            NetworkManager.Instance.Socket.OnUnityThread("error", OnServerError);
         }
         else
         {
@@ -76,5 +77,11 @@ public class GameManager : MonoBehaviour
             result = "Draw!";
         }
         Debug.Log($"<color=purple>{result}</color>");
+    }
+
+    void OnServerError(SocketIOResponse response)
+    {
+        var data = response.GetValue<ErrorDto>();
+        Debug.LogError($"<color=red>Server error: {data.message}</color>");
     }
 }
