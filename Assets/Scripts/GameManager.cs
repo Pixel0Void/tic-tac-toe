@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using SocketIOClient;
 using UnityEngine;
 
@@ -5,6 +6,9 @@ public class GameManager : MonoBehaviour
 {
     private PlayerSymbol m_MyPlayerSymbol = PlayerSymbol.None;
     private string m_CurrentRoomId = "";
+    private PlayerSymbol m_CurrentTurnSymbol = PlayerSymbol.None;
+    private PlayerSymbol[] m_BoardState = new PlayerSymbol[9];
+    private Dictionary<PlayerSymbol, int> m_CurrentScores = new Dictionary<PlayerSymbol, int>();
 
     void Start()
     {
@@ -13,6 +17,7 @@ public class GameManager : MonoBehaviour
             NetworkManager.Instance.Socket.OnUnityThread("playerAssigned", OnPlayerAssigned);
             NetworkManager.Instance.Socket.OnUnityThread("roomJoined", OnRoomJoined);
             NetworkManager.Instance.Socket.OnUnityThread("gameReady", OnGameReady);
+            NetworkManager.Instance.Socket.OnUnityThread("gameStateUpdate", OnGameStateUpdate);
         }
         else
         {
@@ -38,5 +43,16 @@ public class GameManager : MonoBehaviour
     {
         var data = response.GetValue<string>();
         Debug.Log($"<color=green>{data}</color>");
+    }
+
+    void OnGameStateUpdate(SocketIOResponse response)
+    {
+        var data = response.GetValue<GameStateUpdateDto>();
+        m_BoardState = data.board;
+
+        m_CurrentScores[PlayerSymbol.X] = data.scores.X;
+        m_CurrentScores[PlayerSymbol.O] = data.scores.O;
+
+        m_CurrentTurnSymbol = data.currentTurn;
     }
 }
