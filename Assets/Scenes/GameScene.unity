@@ -443,7 +443,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 433392428}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1808212626}
+        m_TargetAssemblyTypeName: MenuUI, Assembly-CSharp
+        m_MethodName: OnExitClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &433392428
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -895,7 +907,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1250270004}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1808212626}
+        m_TargetAssemblyTypeName: MenuUI, Assembly-CSharp
+        m_MethodName: OnPlayClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1250270004
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1080,6 +1104,7 @@ GameObject:
   - component: {fileID: 1808212623}
   - component: {fileID: 1808212625}
   - component: {fileID: 1808212624}
+  - component: {fileID: 1808212626}
   m_Layer: 5
   m_Name: MenuUI
   m_TagString: Untagged
@@ -1148,6 +1173,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1808212622}
   m_CullTransparentMesh: 1
+--- !u!114 &1808212626
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1808212622}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cfc57fb3687cde04eb6a8d6978dff7a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PlayBtn: {fileID: 1250270003}
 --- !u!1001 &2626545885775399670
 PrefabInstance:
   m_ObjectHideFlags: 0

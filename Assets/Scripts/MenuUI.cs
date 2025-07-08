@@ -1,18 +1,23 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MenuUI : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public Button PlayBtn;
+
+    void OnEnable()
     {
-        
+        PlayBtn.interactable = true;
     }
 
-    // Update is called once per frame
-    void Update()
+    public void OnPlayClick()
     {
-        
+        PlayBtn.interactable = false;
+        NetworkManager.Instance.Socket.Emit("findMatch");
+    }
+
+    public void OnExitClick()
+    {
+        Application.Quit();
     }
 }
