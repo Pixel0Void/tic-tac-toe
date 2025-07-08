@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
         {
             NetworkManager.Instance.Socket.OnUnityThread("playerAssigned", OnPlayerAssigned);
             NetworkManager.Instance.Socket.OnUnityThread("roomJoined", OnRoomJoined);
+            NetworkManager.Instance.Socket.OnUnityThread("gameReady", OnGameReady);
         }
         else
         {
@@ -31,5 +32,11 @@ public class GameManager : MonoBehaviour
         var data = response.GetValue<RoomJoinedDto>();
         m_CurrentRoomId = data.roomId;
         Debug.Log($"<color=green>Successfully joined to room '{m_CurrentRoomId}'.</color>");
+    }
+
+    void OnGameReady(SocketIOResponse response)
+    {
+        var data = response.GetValue<string>();
+        Debug.Log($"<color=green>{data}</color>");
     }
 }
