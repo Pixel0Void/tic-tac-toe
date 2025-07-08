@@ -13,6 +13,10 @@ public class UIManager : MonoBehaviour
     public Sprite XSprite;
     public Sprite OSprite;
 
+    [Header("Turn Indicators")]
+    public GameObject MyTurnIndicator;
+    public GameObject OpponentTurnIndicator;
+
     public void UpdateCells(PlayerSymbol value)
     {
         for (int i = 0; i < CellImages.Length; i++)
@@ -64,5 +68,11 @@ public class UIManager : MonoBehaviour
             ScoresTxt.text = $"{xScore} : {oScore}";
         else
             ScoresTxt.text = $"{oScore} : {xScore}";
+    }
+
+    public void UpdateTurn(bool isMyTurn)
+    {
+        MyTurnIndicator.SetActive(isMyTurn);
+        MyTurnIndicator.SetActive(!isMyTurn);
     }
 }
