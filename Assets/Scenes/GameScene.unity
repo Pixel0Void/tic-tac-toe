@@ -3666,6 +3666,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21ce5b4a4ab220e4bbd4d9c6c3a6b9ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MenuPanel: {fileID: 5289674990476312797}
+  GamePanel: {fileID: 1784091859}
+  EndGamePanel: {fileID: 1845850475}
+  ResultTxt: {fileID: 2075711773}
+  RestartBtn: {fileID: 1680836209}
   GameCells:
   - {fileID: 1431739458}
   - {fileID: 806257596}

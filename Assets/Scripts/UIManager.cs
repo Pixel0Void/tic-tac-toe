@@ -1,8 +1,18 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
+    [Header("Panels")]
+    public GameObject MenuPanel;
+    public GameObject GamePanel;
+
+    [Header("End Game Panel")]
+    public GameObject EndGamePanel;
+    public Text ResultTxt;
+    public Button RestartBtn;
+
     public Button[] GameCells;
     public Image[] CellImages;
 
@@ -19,6 +29,47 @@ public class UIManager : MonoBehaviour
     [Header("Turn Indicators")]
     public GameObject MyTurnIndicator;
     public GameObject OpponentTurnIndicator;
+
+    void Awake()
+    {
+        UpdateCells(PlayerSymbol.None);
+    }
+
+    public void BackToMenu()
+    {
+        MenuPanel.SetActive(true);
+        GamePanel.SetActive(false);
+        EndGamePanel.SetActive(false);
+    }
+
+    public void GoToGame()
+    {
+        GamePanel.SetActive(true);
+        MenuPanel.SetActive(false);
+        EndGamePanel.SetActive(false);
+    }
+
+    public void InitialEndGamePanel(bool gameOver, string message = "")
+    {
+        EndGamePanel.SetActive(true);
+        RestartBtn.onClick.RemoveAllListeners();
+        ResultTxt.text = message;
+        if (gameOver)
+        {
+            RestartBtn.onClick.AddListener(BackToMenu);
+            RestartBtn.GetComponentInChildren<TMP_Text>().text = "Back to menu";
+        }
+        else
+        {
+            RestartBtn.onClick.AddListener(OnRestartClick);
+            RestartBtn.GetComponentInChildren<TMP_Text>().text = "Restart";
+        }
+    }
+
+    public void OnRestartClick()
+    {
+        EndGamePanel.SetActive(false);
+    }
 
     public void UpdateCells(PlayerSymbol value)
     {
