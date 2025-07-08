@@ -12,3 +12,9 @@ public struct PlayerAssignedDto
 {
     public PlayerSymbol symbol;
 }
+
+[Serializable]
+public struct RoomJoinedDto
+{
+    public string roomId;
+}
