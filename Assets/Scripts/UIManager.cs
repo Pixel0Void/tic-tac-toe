@@ -137,7 +137,7 @@ public class UIManager : MonoBehaviour
     public void UpdateTurn(bool isMyTurn)
     {
         MyTurnIndicator.SetActive(isMyTurn);
-        MyTurnIndicator.SetActive(!isMyTurn);
+        OpponentTurnIndicator.SetActive(!isMyTurn);
     }
 
     public void SetSigns(PlayerSymbol mySymbol)
